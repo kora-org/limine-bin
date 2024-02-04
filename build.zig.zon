@@ -1,4 +1,4 @@
 .{
     .name = "limine-bin",
-    .version = "latest",
+    .version = "7.0.2",
 }
