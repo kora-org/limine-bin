@@ -1,10 +1,13 @@
 name: Update version on build.zig.zon
+
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
+
+permissions: write-all
 
 jobs:
   update:
