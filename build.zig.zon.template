@@ -1,0 +1,4 @@
+.{
+    .name = "limine-bin",
+    .version = "LIMINE_VERSION",
+}

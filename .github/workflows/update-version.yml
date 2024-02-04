@@ -1,0 +1,24 @@
+name: Update version on build.zig.zon
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  dependabot:
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get latest version
+        run: echo "LIMINE_VERSION=$(curl https://api.github.com/repos/limine-bootloader/limine/releases/latest -s | jq .name -r | sed 's/v//g')" >> $GITHUB_ENV
+      - name: Update version
+        run: sed "s/LIMINE_VERSION/${{ env.LIMINE_VERSION }}/g" build.zig.zon.template > build.zig.zon
+      - name: Push changes
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git commit -am "Update to v${{ env.LIMINE_VERSION }}"
+          git push
